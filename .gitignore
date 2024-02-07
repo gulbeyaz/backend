@@ -1,0 +1,12 @@
+.env
+!pkg/config/testData/.env
+.idea/
+.fleet/
+.vscode/
+out/
+tmp/
+bin
+coverage.txt
+coverage.out
+results.sarif
+results.html
