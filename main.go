@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gb-backend/handler"
+	"gb-backend/internal/auth"
 	"log"
 	"os"
 
@@ -10,7 +10,6 @@ import (
 )
 
 func init() {
-
 	err := godotenv.Load(".env")
 
 	if err != nil {
@@ -19,13 +18,16 @@ func init() {
 }
 
 func main() {
-	var PORT string = os.Getenv("PORT")
+	PORT := os.Getenv("PORT")
+	DB := "mongo"
 
-	app := fiber.New()
+	APP := fiber.New()
 
-	authHandler := handler.AuthHandler{}
+	authRespository := auth.NewRepository(DB)
+	authService := auth.NewService(authRespository)
+	authHandler := auth.NewHandler(authService)
 
-	app.Post("/auth/register", authHandler.HandleRegister)
+	APP.Post("/auth/register", authHandler.Register)
 
-	app.Listen(PORT)
+	APP.Listen(PORT)
 }
