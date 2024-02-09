@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"gb-backend/handler"
+
+	"github.com/labstack/echo/v4"
+)
 
 func main() {
-	fmt.Println("Works.")
+	app := echo.New()
+
+	authHandler := handler.AuthHandler{}
+
+	app.POST("/auth/register", authHandler.HandleRegister)
+
+	app.Start(":8081")
 }
